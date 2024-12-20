@@ -39,16 +39,16 @@ public class CustomerController
 	@PostMapping
 	public ResponseEntity<Object> createCustomer(@RequestBody Customer customer)
 	{
-		logger.info("Received request to create customer: {}", customer.getFirstName()); // Log incoming request
+		logger.info("Received request to create customer: {}", customer.getFirstName());
 
 		Customer createdCustomer = customerService.createCustomer(customer);
 
 		if (Objects.nonNull(createdCustomer)) {
-			logger.info("Customer created successfully: {}", createdCustomer.getFirstName()); // Log successful creation
+			logger.info("Customer created successfully: {}", createdCustomer.getFirstName());
 			return ResponseEntity.status(HttpStatus.CREATED).body("Customer is created successfully");
 		}
 
-		logger.error("Failed to create customer: {}", customer.getFirstName()); // Log failure
+		logger.error("Failed to create customer: {}", customer.getFirstName());
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create customer");
 	}
 
@@ -58,7 +58,7 @@ public class CustomerController
 	@GetMapping
 	public ResponseEntity<Object> getAllCustomers()
 	{
-		logger.info("Received request to fetch all customers."); 
+		logger.info("Received request to fetch all customers.");
 
 		List<Customer> customersList = customerService.getAllCustomers();
 
@@ -85,9 +85,9 @@ public class CustomerController
 	@PatchMapping("/{id}")
 	public Customer patchCustomer(@PathVariable Long id, @RequestBody Customer customer)
 	{
-		logger.info("Received request for partial update of customer with ID: {}", id); // Log incoming request
+		logger.info("Received request for partial update of customer with ID: {}", id); 
 		Customer patchedCustomer = customerService.patchCustomer(id, customer);
-		logger.info("Customer with ID: {} patched successfully.", id); // Log success
+		logger.info("Customer with ID: {} patched successfully.", id); 
 		return patchedCustomer;
 	}
 }

@@ -8,66 +8,87 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Product {
+public class Product
+{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String bookTitle;
-    private double bookPrice;
-    private int bookQuantity;
+	private String bookTitle;
+	private double bookPrice;
+	private int bookQuantity;
 
-    
-    private String category;       
-    private LocalDate publishDate; 
+	private String category;
+	private LocalDate publishDate;
 
-    
-    public Long getId() {
-        return id;
-    }
+	// Constructor with all fields
+	public Product(String bookTitle, double bookPrice, int bookQuantity, String category, String publishDate)
+	{
+		this.bookTitle = bookTitle;
+		this.bookPrice = bookPrice;
+		this.bookQuantity = bookQuantity;
+		this.category = category;
+		this.publishDate = LocalDate.parse(publishDate); // Convert String to LocalDate
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId()
+	{
+		return id;
+	}
 
-    public String getBookTitle() {
-        return bookTitle;
-    }
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
 
-    public void setBookTitle(String bookTitle) {
-        this.bookTitle = bookTitle;
-    }
+	public String getBookTitle()
+	{
+		return bookTitle;
+	}
 
-    public double getBookPrice() {
-        return bookPrice;
-    }
+	public void setBookTitle(String bookTitle)
+	{
+		this.bookTitle = bookTitle;
+	}
 
-    public void setBookPrice(double bookPrice) {
-        this.bookPrice = bookPrice;
-    }
+	public double getBookPrice()
+	{
+		return bookPrice;
+	}
 
-    public int getBookQuantity() {
-        return bookQuantity;
-    }
+	public void setBookPrice(double bookPrice)
+	{
+		this.bookPrice = bookPrice;
+	}
 
-    public void setBookQuantity(int bookQuantity) {
-        this.bookQuantity = bookQuantity;
-    }
+	public int getBookQuantity()
+	{
+		return bookQuantity;
+	}
 
-    public String getCategory() {
-        return category;
-    }
+	public void setBookQuantity(int bookQuantity)
+	{
+		this.bookQuantity = bookQuantity;
+	}
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
+	public String getCategory()
+	{
+		return category;
+	}
 
-    public LocalDate getPublishDate() {
-        return publishDate;
-    }
+	public void setCategory(String category)
+	{
+		this.category = category;
+	}
 
-    public void setPublishDate(LocalDate publishDate) {
-        this.publishDate = publishDate;
-    }
+	public LocalDate getPublishDate()
+	{
+		return publishDate;
+	}
+
+	public void setPublishDate(LocalDate publishDate)
+	{
+		this.publishDate = publishDate;
+	}
 }

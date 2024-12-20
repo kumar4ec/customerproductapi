@@ -35,6 +35,11 @@ public class ProductController
 	@Autowired
 	private ProductService productService;
 
+	/**
+	 * 
+	 * @param product
+	 * @return
+	 */
 	@Operation(summary = "Create a new product", description = "This API allows you to create a new product.")
 	@ApiResponse(responseCode = "201", description = "Product created successfully", content = @Content(mediaType = "application/json"))
 	@ApiResponse(responseCode = "500", description = "Failed to create product")
@@ -52,6 +57,10 @@ public class ProductController
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create Product");
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	@Operation(summary = "Get all products", description = "This API retrieves all products from the system.")
 	@ApiResponse(responseCode = "200", description = "List of products", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Product.class)))
 	@ApiResponse(responseCode = "404", description = "No products found")
@@ -61,30 +70,42 @@ public class ProductController
 		logger.info("Received request to get all products");
 		List<Product> productList = productService.getAllProducts();
 		if (productList.isEmpty()) {
-			logger.warn("No products found"); 
+			logger.warn("No products found");
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Products found");
 		}
 		logger.info("Successfully fetched {} products", productList.size()); // Log successful retrieval
 		return ResponseEntity.ok(productList);
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @param product
+	 * @return
+	 */
 	@Operation(summary = "Update product information", description = "This API allows you to update product details.")
 	@PutMapping("/{id}")
 	public Product updateProduct(@PathVariable Long id, @RequestBody Product product)
 	{
-		logger.info("Received request to update product with ID {}: {}", id, product); 
-        Product updatedProduct = productService.updateProduct(id, product);
-        logger.info("Product updated successfully: {}", updatedProduct); // Log successful update
-        return updatedProduct;
+		logger.info("Received request to update product with ID {}: {}", id, product);
+		Product updatedProduct = productService.updateProduct(id, product);
+		logger.info("Product updated successfully: {}", updatedProduct); // Log successful update
+		return updatedProduct;
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @param product
+	 * @return
+	 */
 	@Operation(summary = "Partial update for product", description = "This API allows you to update specific fields of a product.")
 	@PatchMapping("/{id}")
 	public Product patchProduct(@PathVariable Long id, @RequestBody Product product)
 	{
-		logger.info("Received request to partially update product with ID {}: {}", id, product); 
-        Product patchedProduct = productService.patchProduct(id, product);
-        logger.info("Product patched successfully: {}", patchedProduct); 
-        return patchedProduct;
+		logger.info("Received request to partially update product with ID {}: {}", id, product);
+		Product patchedProduct = productService.patchProduct(id, product);
+		logger.info("Product patched successfully: {}", patchedProduct);
+		return patchedProduct;
 	}
 }
