@@ -26,23 +26,28 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 @RestController
 @RequestMapping("/api/customers")
-public class CustomerController {
+public class CustomerController
+{
 
-	private static final Logger logger = LoggerFactory.getLogger(CustomerController.class); 
+	private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 	@Autowired
 	private CustomerService customerService;
 
-	
 	@Operation(summary = "Create a new customer", description = "This API allows you to create a new customer in the system.")
 	@ApiResponse(responseCode = "201", description = "Customer created successfully", content = @Content(mediaType = "application/json"))
 	@ApiResponse(responseCode = "500", description = "Failed to create customer")
 	@PostMapping
-	public ResponseEntity<Object> createCustomer(@RequestBody Customer customer) {
-		logger.info("Received request to create customer: {}", customer.getFirstName()); 
+	public ResponseEntity<Object> createCustomer(@RequestBody Customer customer)
+	{
+		logger.info("Received request to create customer: {}", customer.getFirstName()); // Log incoming request
+
 		Customer createdCustomer = customerService.createCustomer(customer);
+
 		if (Objects.nonNull(createdCustomer)) {
+			logger.info("Customer created successfully: {}", createdCustomer.getFirstName()); // Log successful creation
 			return ResponseEntity.status(HttpStatus.CREATED).body("Customer is created successfully");
 		}
+
 		logger.error("Failed to create customer: {}", customer.getFirstName()); // Log failure
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create customer");
 	}
@@ -51,19 +56,25 @@ public class CustomerController {
 	@ApiResponse(responseCode = "200", description = "List of customers", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Customer.class)))
 	@ApiResponse(responseCode = "404", description = "No customers found")
 	@GetMapping
-	public ResponseEntity<Object> getAllCustomers() {
-		logger.info("Received request to fetch all customers.");
+	public ResponseEntity<Object> getAllCustomers()
+	{
+		logger.info("Received request to fetch all customers."); 
+
 		List<Customer> customersList = customerService.getAllCustomers();
+
 		if (customersList.isEmpty()) {
+			logger.warn("No customers found in the system."); // Log if no customers found
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No customers found");
 		}
-		logger.info("Returning list of {} customers.", customersList.size());
+
+		logger.info("Returning list of {} customers.", customersList.size()); // Log number of customers returned
 		return ResponseEntity.ok(customersList);
 	}
 
 	@Operation(summary = "Update customer information", description = "This API allows you to update customer details.")
 	@PutMapping("/{id}")
-	public Customer updateCustomer(@PathVariable Long id, @RequestBody Customer customer) {
+	public Customer updateCustomer(@PathVariable Long id, @RequestBody Customer customer)
+	{
 		logger.info("Received request to update customer with ID: {}", id);
 		Customer updatedCustomer = customerService.updateCustomer(id, customer);
 		logger.info("Customer with ID: {} updated successfully.", id); // Log success
@@ -72,10 +83,11 @@ public class CustomerController {
 
 	@Operation(summary = "Partial update for customer", description = "This API allows you to update specific fields of a customer.")
 	@PatchMapping("/{id}")
-	public Customer patchCustomer(@PathVariable Long id, @RequestBody Customer customer) {
+	public Customer patchCustomer(@PathVariable Long id, @RequestBody Customer customer)
+	{
 		logger.info("Received request for partial update of customer with ID: {}", id); // Log incoming request
-        Customer patchedCustomer = customerService.patchCustomer(id, customer);
-        logger.info("Customer with ID: {} patched successfully.", id); // Log success
-        return patchedCustomer;
+		Customer patchedCustomer = customerService.patchCustomer(id, customer);
+		logger.info("Customer with ID: {} patched successfully.", id); // Log success
+		return patchedCustomer;
 	}
 }
