@@ -10,20 +10,24 @@ import com.example.customerproductapi.exception.ResourceNotFoundException;
 import com.example.customerproductapi.repository.CustomerRepository;
 
 @Service
-public class CustomerService {
+public class CustomerService
+{
 
 	@Autowired
 	private CustomerRepository customerRepository;
 
-	public Customer createCustomer(Customer customer) {
+	public Customer createCustomer(Customer customer)
+	{
 		return customerRepository.save(customer);
 	}
 
-	public List<Customer> getAllCustomers() {
+	public List<Customer> getAllCustomers()
+	{
 		return customerRepository.findAll();
 	}
 
-	public Customer updateCustomer(Long id, Customer customer) {
+	public Customer updateCustomer(Long id, Customer customer)
+	{
 
 		customer.setId(id);
 		return customerRepository.findById(id).map(existingCustomer -> {
@@ -39,7 +43,8 @@ public class CustomerService {
 		}).orElseThrow(() -> new ResourceNotFoundException("Customer with ID " + id + " not found"));
 	}
 
-	public Customer patchCustomer(Long id, Customer customer) {
+	public Customer patchCustomer(Long id, Customer customer)
+	{
 
 		customer.setId(id);
 		return customerRepository.findById(id).map(existingCustomer -> {
@@ -65,7 +70,7 @@ public class CustomerService {
 			if (customer.getAddress() != null) {
 				existingCustomer.setAddress(customer.getAddress());
 			}
-			// Set other fields as needed
+
 			return customerRepository.save(existingCustomer);
 		}).orElseThrow(() -> new ResourceNotFoundException("Customer with ID " + id + " not found"));
 	}
