@@ -26,6 +26,12 @@ public class CustomerService
 		return customerRepository.findAll();
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @param customer
+	 * @return
+	 */
 	public Customer updateCustomer(Long id, Customer customer)
 	{
 
@@ -43,6 +49,12 @@ public class CustomerService
 		}).orElseThrow(() -> new ResourceNotFoundException("Customer with ID " + id + " not found"));
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @param customer
+	 * @return
+	 */
 	public Customer patchCustomer(Long id, Customer customer)
 	{
 

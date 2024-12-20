@@ -61,16 +61,15 @@ public class CustomerServiceTest
 		assertEquals("John", createdCustomer.getFirstName());
 		assertEquals("Doe", createdCustomer.getLastName());
 
-		verify(customerRepository, times(1)).save(any(Customer.class)); 
+		verify(customerRepository, times(1)).save(any(Customer.class));
 	}
 
 	@Test
 	public void testGetAllCustomers()
 	{
-		
+
 		when(customerRepository.findAll()).thenReturn(Arrays.asList(customer));
 
-		
 		List<Customer> customers = customerService.getAllCustomers();
 
 		// Assert
@@ -84,7 +83,7 @@ public class CustomerServiceTest
 	@Test
 	public void testUpdateCustomer()
 	{
-		
+
 		Customer updatedCustomer = new Customer();
 		updatedCustomer.setFirstName("Updated");
 		updatedCustomer.setLastName("Name");
@@ -92,7 +91,6 @@ public class CustomerServiceTest
 		when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
 		when(customerRepository.save(any(Customer.class))).thenReturn(updatedCustomer);
 
-		
 		Customer result = customerService.updateCustomer(1L, updatedCustomer);
 
 		// Assert
@@ -107,17 +105,16 @@ public class CustomerServiceTest
 	@Test
 	public void testUpdateCustomerThrowsException()
 	{
-		
+
 		when(customerRepository.findById(1L)).thenReturn(Optional.empty()); // Customer not found
 
-		
 		ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
 			customerService.updateCustomer(1L, customer);
 		});
 
 		assertEquals("Customer with ID 1 not found", exception.getMessage());
 
-		verify(customerRepository, times(1)).findById(1L); 
+		verify(customerRepository, times(1)).findById(1L);
 	}
 
 	@Test
@@ -144,10 +141,9 @@ public class CustomerServiceTest
 	@Test
 	public void testPatchCustomerThrowsException()
 	{
-		
+
 		when(customerRepository.findById(1L)).thenReturn(Optional.empty()); // Customer not found
 
-		
 		ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
 			customerService.patchCustomer(1L, customer);
 		});

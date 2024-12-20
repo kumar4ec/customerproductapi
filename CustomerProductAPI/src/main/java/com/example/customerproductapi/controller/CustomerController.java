@@ -33,6 +33,11 @@ public class CustomerController
 	@Autowired
 	private CustomerService customerService;
 
+	/**
+	 * 
+	 * @param customer
+	 * @return
+	 */
 	@Operation(summary = "Create a new customer", description = "This API allows you to create a new customer in the system.")
 	@ApiResponse(responseCode = "201", description = "Customer created successfully", content = @Content(mediaType = "application/json"))
 	@ApiResponse(responseCode = "500", description = "Failed to create customer")
@@ -52,6 +57,10 @@ public class CustomerController
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create customer");
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	@Operation(summary = "Get all customers", description = "This API retrieves all customers from the system.")
 	@ApiResponse(responseCode = "200", description = "List of customers", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Customer.class)))
 	@ApiResponse(responseCode = "404", description = "No customers found")
@@ -71,6 +80,9 @@ public class CustomerController
 		return ResponseEntity.ok(customersList);
 	}
 
+	/**
+	 * 
+	 */
 	@Operation(summary = "Update customer information", description = "This API allows you to update customer details.")
 	@PutMapping("/{id}")
 	public Customer updateCustomer(@PathVariable Long id, @RequestBody Customer customer)
@@ -81,13 +93,16 @@ public class CustomerController
 		return updatedCustomer;
 	}
 
+	/**
+	 * 
+	 */
 	@Operation(summary = "Partial update for customer", description = "This API allows you to update specific fields of a customer.")
 	@PatchMapping("/{id}")
 	public Customer patchCustomer(@PathVariable Long id, @RequestBody Customer customer)
 	{
-		logger.info("Received request for partial update of customer with ID: {}", id); 
+		logger.info("Received request for partial update of customer with ID: {}", id);
 		Customer patchedCustomer = customerService.patchCustomer(id, customer);
-		logger.info("Customer with ID: {} patched successfully.", id); 
+		logger.info("Customer with ID: {} patched successfully.", id);
 		return patchedCustomer;
 	}
 }
