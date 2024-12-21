@@ -21,6 +21,11 @@ public class Product
 
 	private String category;
 	private LocalDate publishDate;
+	
+	public Product()
+	{
+		
+	}
 
 	// Constructor with all fields
 	public Product(String bookTitle, double bookPrice, int bookQuantity, String category, String publishDate)

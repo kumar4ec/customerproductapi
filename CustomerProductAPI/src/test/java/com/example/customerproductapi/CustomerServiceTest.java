@@ -37,7 +37,7 @@ public class CustomerServiceTest
 		// Initialize mocks
 		MockitoAnnotations.openMocks(this);
 
-		// Set up a sample customer
+		
 		customer = new Customer();
 		customer.setId(1L);
 		customer.setFirstName("John");
